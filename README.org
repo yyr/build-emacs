@@ -1,0 +1,21 @@
+* Build GNU Emacs from source.
+
+* USAGE
+** First install dependencies
+*** Debian/Ubuntu
+
+: sudo apt-get build-essentials
+: sudo apt-get build-dep emacs23
+
+** clone Emacs git repository
+I use github emacsmirror, Since it is fast
+
+: git clone https://github.com/emacsmirror/emacs.git
+
+** (Optionally) customize the installation directories
+
+* TODOs
+make it more generalize
+
+* License
+GPL v3 or later
