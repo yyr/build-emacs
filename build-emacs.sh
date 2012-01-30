@@ -88,9 +88,9 @@ bootstrap="no"
 if [ ! -f configure ]; then
     run_autogen
     bootstrap=yes
+    run_configure
 fi
 
-run_configure
 run_make
 
 # back up earlier installation
