@@ -68,7 +68,8 @@ case `hostname` in
         conf_flags=' --with-jpeg=no --with-gif=no --with-tiff=no --without-gnutls'
         ;;
     *)
-        conf_flags=" --with-gnutls=yes"
+        conf_flags=" --with-gnutls=yes   --without-compress-info"
+
 esac
 
 repo_dir=~/repos/emacs
