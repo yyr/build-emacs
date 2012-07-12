@@ -17,32 +17,6 @@ ERROR: $@
     exit 24
 }
 
-function run_configure()
-{
-    announce "running configure"
-    ./configure --prefix=$install_dir $conf_flags &> config.log ||
-    error_convay "while running 'configure' check config.log"
-}
-
-function run_make()
-{
-    announce "running make"
-    if [ $bootstrap == "yes" ]; then
-        make bootstrap &> bootstrap.log  ||
-        error_convay "while running 'make bootstrap' check config.log"
-    else
-        make > make.log ||
-        error_convay "while running 'make' check config.log"
-    fi
-}
-
-function run_git()
-{
-    announce "running git update"
-    git reset --hard
-    git pull
-}
-
 function run_autogen() {        # run autogen.sh
     announce "running autogen.sh"
     ./autogen.sh &> autogen.log
@@ -51,5 +25,28 @@ function run_autogen() {        # run autogen.sh
     if [ $? -ne 0 ]; then
         ./autogen/copy_autogen
     fi
+}
 
+function run_configure()
+{
+    if [ ! -f configure ]; then
+        run_autogen
+    fi
+
+    announce "running configure"
+    ./configure --prefix=$INSTALL_DIR  &> config.log ||
+    error_convay "while running 'configure' check config.log"
+}
+
+function run_make()
+{
+    if [ ! -f Makefile ]; then
+        run_configure
+    fi
+    make
+}
+
+function build_emacs()
+{
+    run_make
 }

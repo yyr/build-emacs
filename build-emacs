@@ -1,58 +1,35 @@
 #!/bin/bash
 #
 # Copyright (C) Yagnesh Raghava Yakkala. http://yagnesh.org
-#    File: buildemacs.sh
+#    File: buildemacs
 # Created: Tuesday, March 22 2011
 # Licence: GPL v3 or later
 #
 
-MIRROR="git://repo.or.cz/emacs.git"
+MIRROR="git://repo.or.cz/emacs.git" # Use mirror instead of GNU server
 SCRIPT_DIR=$(cd `dirname $BASH_SOURCE`; pwd)
 cd $SCRIPT_DIR
 
 . ./be-functions
 
-install_dir=$HOME/local/emacs-git
-backup_dir=$HOME/local/emacs-backup
-
-if [ -d emacs ]; then
+# Clone emacs repo if it is not already present
+if [ ! -d emacs ]; then
     git clone $MIRROR
 fi
 
 cd emacs
-run_git                      # may be update to latest trunk
 
-case `hostname` in
-    amur*)
-        conf_flags=' --with-jpeg=no --with-gif=no --with-tiff=no --without-gnutls'
-        ;;
-    *)
-        conf_flags=" --with-gnutls=yes   --without-compress-info"
+git pull origin master
 
-esac
+# last commit (rev)
+# latest tag (i.e, release)
+# or any thing argument (we just run git checkout for that)
 
-# by default try to run make normally if there is no
-# configure script then run "make bootstrap"
-bootstrap="no"
+rev=$(git rev-parse --short HEAD)
+latest_tag=$(git describe --abbrev=0 --tags)
 
-if [ ! -f configure ]; then
-    run_autogen
-    bootstrap=yes
-    run_configure
-fi
+INSTALL_DIR=$HOME/local/emacs-$rev
 
-run_make
-
-# back up earlier installation
-if [ -d $install_dir ]; then
-    if [ -d $backup_dir ]; then
-        rm -r $backup_dir
-    fi
-    mv $install_dir  ${backup_dir}
-fi
-
-announce "make install"
-make install &> install.log || error_convay "while running 'make install' check install.log"
-announce "built emacs successfully"
+build_emacs
 
 # buildemacs ends here
