@@ -15,7 +15,11 @@ cd $SCRIPT_DIR
 install_dir=$HOME/local/emacs-git
 backup_dir=$HOME/local/emacs-backup
 
-cd $repo_dir
+if [ -d emacs ]; then
+    git clone $MIRROR
+fi
+
+cd emacs
 run_git                      # may be update to latest trunk
 
 case `hostname` in
