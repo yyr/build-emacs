@@ -16,20 +16,31 @@ cd $SCRIPT_DIR
 if [ ! -d emacs ]; then
     git clone $MIRROR
 fi
-
 cd emacs
 
-git pull origin master
+git_tag=""
 
-# last commit (rev)
-# latest tag (i.e, release)
-# or any thing argument (we just run git checkout for that)
+while [[ $# -gt 0 ]]; do
 
-rev=$(git rev-parse --short HEAD)
-latest_tag=$(git describe --abbrev=0 --tags)
+    case $1 in
+         head|HEAD )             # last commit (rev)
+            build_emacs_git_head
+            ;;
 
-INSTALL_DIR=$HOME/local/emacs-$rev
+        -t|--tag )              # latest tag (i.e, release)
+            git_tag="$git_tag $2"
+            shift
+            build_emacs_from_tag $git_tag
+            ;;
 
-build_emacs
+        *)
+            echo "Unknown Argument!!"
+            break;;
+    esac
+    shift
+
+done
+
+
 
 # buildemacs ends here

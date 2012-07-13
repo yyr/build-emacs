@@ -43,10 +43,35 @@ function run_make()
     if [ ! -f Makefile ]; then
         run_configure
     fi
-    make
+    make && make install
 }
 
 function build_emacs()
 {
+    run_configure
     run_make
+}
+
+
+function build_emacs_git_head()
+{
+    # change to master, pull for updates and call build
+    git checkout master
+    git pull origin master
+
+    rev=$(git rev-parse --short HEAD)
+    INSTALL_DIR=$HOME/local/emacs-$rev
+    build_emacs
+
+}
+
+function build_emacs_from_tag()
+{
+    if [ $git_tag == "latest" ]; then
+        latest_tag=$(git describe --abbrev=0 --tags)
+        git checkout $latest_tag
+        # since we are checking out to to rev make sure repo is clean
+        git clean -xdf
+        build_emacs
+    fi
 }
