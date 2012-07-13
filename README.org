@@ -1,21 +1,22 @@
-* Build GNU Emacs from source.
+** how to
+First make sure you have all dependencies installed on your system.
 
-* USAGE
-** First install dependencies
-*** Debian/Ubuntu
-
+on Ubuntu I do this for installing dependencies, your system may have
+different commands
 : sudo apt-get build-essentials
 : sudo apt-get build-dep emacs23
 
-** clone Emacs git repository
-I use github emacsmirror, Since it is fast
+*** Get this repo
+: ./build-emacs head              # to install
+: ./build-emacs -t latest       # build latest stable release
+: ./build-emacs -t some_tag     # for eg some_tag may be emacs-24.1
+: ./build-emacs -b some_branch  # build from some_branch
 
-: git clone https://github.com/emacsmirror/emacs.git
 
-** (Optionally) customize the installation directories
+*** Notes
+- uses git commands to maintain sources instead of bzr
+- uses mirror from repo.or.cz instead of official (to reduce load on GNU servers)
+- post-build-hook is available for customizations.
 
-* TODOs
-make it more generalize
-
-* License
+** License
 GPL v3 or later
