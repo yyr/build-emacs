@@ -1,0 +1,2 @@
+# -*- mode: sh; -*-
+ln -sf $INSTALL_DIR/bin/emacs* ~/bin/
