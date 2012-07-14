@@ -57,6 +57,15 @@ function build_emacs_from_tag()
         git checkout $latest_tag
         # since we are checking out to to rev make sure repo is clean
         git clean -xdf
+
+        INSTALL_DIR=$HOME/local/$latest_tag
+        build_emacs
+
+    else
+        git checkout $git_tag
+        git clean -xdf
+
+        INSTALL_DIR=$HOME/local/$latest_tag
         build_emacs
     fi
 }
