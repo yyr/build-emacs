@@ -6,15 +6,25 @@
 # Licence: GPL v3 or later
 #
 
-MIRROR="git://repo.or.cz/emacs.git" # Use mirror instead of GNU server
+# Instead of changing variable in here create be.conf file
+
 SCRIPT_DIR=$(cd `dirname $BASH_SOURCE`; pwd)
 cd $SCRIPT_DIR
+
+if [ -f be.conf ]; then
+    . be.conf
+fi
+
+# Use mirror instead of GNU server
+# get from envronment or set it to empty.
+BE_REMOTE=${BE_REMOTE:-"git://repo.or.cz/emacs.git"}
+BE_CONF_FLAGS=${BE_CONF_FLAGS:-""}
 
 . ./be-functions
 
 # Clone emacs repo if it is not already present
 if [ ! -d emacs ]; then
-    git clone $MIRROR
+    git clone $BE_REMOTE
 fi
 cd emacs
 
@@ -23,7 +33,7 @@ git_tag=""
 while [[ $# -gt 0 ]]; do
 
     case $1 in
-         head|HEAD )             # last commit (rev)
+        head|HEAD )             # last commit (rev)
             build_emacs_git_head
             ;;
 

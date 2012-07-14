@@ -1,24 +1,6 @@
 # -*- mode: shell-script; -*-
 
-function announce() {
-    echo "
-============================================
-$@
-============================================
-"
-}
-
-function error_convay () {
-    announce "
-      XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-ERROR: $@
-      XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-"
-    exit 24
-}
-
 function run_autogen() {        # run autogen.sh
-    announce "running autogen.sh"
     ./autogen.sh &> autogen.log
 
     # if autogen fails fallback method
@@ -33,9 +15,7 @@ function run_configure()
         run_autogen
     fi
 
-    announce "running configure"
-    ./configure --prefix=$INSTALL_DIR  &> config.log ||
-    error_convay "while running 'configure' check config.log"
+    ./configure --prefix=$INSTALL_DIR $BE_CONF_FLAGS  | tee log.config
 }
 
 function run_make()
@@ -43,7 +23,8 @@ function run_make()
     if [ ! -f Makefile ]; then
         run_configure
     fi
-    make && make install
+    make | tee log.make
+    make install | tee log.install
 }
 
 function build_emacs()
