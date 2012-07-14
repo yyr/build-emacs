@@ -55,7 +55,7 @@ function build_emacs_from_tag()
     if [ $git_tag == "latest" ]; then
         latest_tag=$(git describe --abbrev=0 --tags)
         git checkout $latest_tag
-        # since we are checking out to to rev make sure repo is clean
+        # since we are checking out to a release(possibly), better clean the repo
         git clean -xdf
 
         INSTALL_DIR=$HOME/local/$latest_tag

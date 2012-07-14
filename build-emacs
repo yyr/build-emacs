@@ -54,6 +54,4 @@ while [[ $# -gt 0 ]]; do
 
 done
 
-
-
 # buildemacs ends here
