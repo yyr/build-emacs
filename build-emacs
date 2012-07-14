@@ -35,17 +35,20 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         head|HEAD )             # last commit (rev)
             build_emacs_git_head
+            break
             ;;
 
         -t|--tag )              # latest tag (i.e, release)
             git_tag="$git_tag $2"
             shift
             build_emacs_from_tag $git_tag
+            break
             ;;
 
         *)
             echo "Unknown Argument!!"
-            break;;
+            exit 4
+            ;;
     esac
     shift
 
