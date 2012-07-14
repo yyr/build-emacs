@@ -15,7 +15,7 @@ function run_configure()
         run_autogen
     fi
 
-    ./configure --prefix=$INSTALL_DIR $BE_CONF_FLAGS  | tee log.config
+    ./configure --prefix=$INSTALL_DIR $BE_CONF_FLAGS --without-compress-info | tee log.config
 }
 
 function run_make()
@@ -24,7 +24,7 @@ function run_make()
         run_configure
     fi
     make | tee log.make
-    make install | tee log.install
+    make GZIP_PROG="" install | tee log.install
 }
 
 function build_emacs()
