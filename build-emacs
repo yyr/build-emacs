@@ -26,15 +26,25 @@ function usage()
 {
     cat <<EOF
 USAGE:
-       $0 <args>
+       $0 -<Options> <args>
 
 Options:
-      -t latest
-           build latest stable release.
-      -t some_tag
-           "some_tag" may be for eg some_tag may be emacs-24.1
-      -b some_branch
-           build from some_branch (local or with remote tracking)
+      -t, --tag
+           build from git tag.
+         latest
+            Build from latest tag
+         tag_name
+           "tag_name" may be for example "emacs-24.1"
+      -b branch_name
+           build from "branch_name" (local or with remote tracking)
+
+      -d
+         build from head but enable debugging CFLAGS
+
+
+
+
+
 
 Argument:
       head
@@ -59,6 +69,8 @@ cd emacs
 
 git_tag=""
 
+
+# Parse Args
 while [[ $# -gt 0 ]]; do
 
     case $1 in
@@ -73,6 +85,11 @@ while [[ $# -gt 0 ]]; do
             build_emacs_from_tag $git_tag
             break
             ;;
+
+
+        -d )
+            export CFLAGS='-g -O0'
+            build_emacs_git_head
 
         *)
             echo "Unknown Argument!!"
