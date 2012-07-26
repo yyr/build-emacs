@@ -90,6 +90,7 @@ while [[ $# -gt 0 ]]; do
         -d )
             export CFLAGS='-g -O0'
             build_emacs_git_head
+            ;;
 
         *)
             echo "Unknown Argument!!"
