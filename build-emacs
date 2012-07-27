@@ -105,17 +105,18 @@ done
 
 
 # go for build.
-if [ x$head ="xyes" ]; then
-    build_from_git_head
+if [[ ! -z $from_branch ]]; then
+    echo "Build from git branch is implemented yet."
+    # build_emacs_git_branch
 
 elif [[ ! -z $git_tag ]]; then
     build_emacs_git_tag
 
-elif [[ -z $from_branch ]]; then
-    echo "Not implemented yet"
-    # build_emacs_git_branch
+elif [[ "x$head" == "xyes" ]]; then
+    build_emacs_git_head
 else
-    echo "Nothing to do..??"
+    echo "Nothing to do.. :(, did you forget to give arguments?"
+    usage
 fi
 
 # buildemacs ends here
