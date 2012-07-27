@@ -39,12 +39,12 @@ function build_emacs()
 
 function git_change_branch()
 {
-
+    echo pass
 }
 
 function build_emacs_git_head()
 {
-    # change to master, pull for updates and call build
+    # change to master, pull for updates and call build.
     git checkout master
     git pull origin master
 
@@ -59,7 +59,7 @@ function build_emacs_git_tag()
     if [ $git_tag == "" || $git_tag == "latest" ]; then
         latest_tag=$(git describe --abbrev=0 --tags)
         git checkout $latest_tag
-        # since we are checking out to a release(possibly), better clean the repo
+        # since we are checking out to a release(possibly), better clean the repo.
         git clean -xdf
 
         INSTALL_DIR=$HOME/local/$latest_tag

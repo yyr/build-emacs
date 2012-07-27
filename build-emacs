@@ -25,28 +25,28 @@ BE_CONF_FLAGS=${BE_CONF_FLAGS:-""}
 function usage()
 {
     cat <<EOF
+
 USAGE:
        $0 -<Options> <args>
 
-Options:
+ Options:
       -t, --tag
-           build from git tag.
+           Build from git tag.
          latest
-            Build from latest tag
+            Build from latest tag.
          tag_name
-           "tag_name" may be for example "emacs-24.1"
+           Build release tag "tag_name". For example "emacs-24.1".
 
       -b branch_name
-           build from "branch_name" (local or with remote tracking)
+           Build from "branch_name" (local or with remote tracking).
 
       -d
-         enable debug flags for the build
+         Enable debug flags for the build.
 
 
-Argument:
+ Argument:
       head
-           Installs from the head
-
+           Install from the head.
 
 EOF
     exit 4
@@ -70,6 +70,7 @@ git_tag=""
 head=""
 debug=""
 from_branch=""
+
 # Parse Args
 while [[ $# -gt 0 ]]; do
 
@@ -94,13 +95,16 @@ while [[ $# -gt 0 ]]; do
             ;;
 
         *)
-            echo "\"$1\"nknown Argument!!"
+            echo "\"$1\" is Unknown Option/Argument!!"
+            usage
             exit 4
             ;;
     esac
     shift
 done
 
+
+# go for build.
 if [ x$head ="xyes" ]; then
     build_from_git_head
 
