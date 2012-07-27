@@ -37,6 +37,10 @@ function build_emacs()
     fi
 }
 
+function git_change_branch()
+{
+
+}
 
 function build_emacs_git_head()
 {
@@ -50,9 +54,9 @@ function build_emacs_git_head()
 
 }
 
-function build_emacs_from_tag()
+function build_emacs_git_tag()
 {
-    if [ $git_tag == "latest" ]; then
+    if [ $git_tag == "" || $git_tag == "latest" ]; then
         latest_tag=$(git describe --abbrev=0 --tags)
         git checkout $latest_tag
         # since we are checking out to a release(possibly), better clean the repo
@@ -61,7 +65,8 @@ function build_emacs_from_tag()
         INSTALL_DIR=$HOME/local/$latest_tag
         build_emacs
 
-    else
+    elif [[ ! -z $git_tag ]]; then
+
         git checkout $git_tag
         git clean -xdf
 

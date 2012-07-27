@@ -35,20 +35,19 @@ Options:
             Build from latest tag
          tag_name
            "tag_name" may be for example "emacs-24.1"
+
       -b branch_name
            build from "branch_name" (local or with remote tracking)
 
       -d
-         build from head but enable debugging CFLAGS
-
-
-
-
+         enable debug flags for the build
 
 
 Argument:
       head
            Installs from the head
+
+
 EOF
     exit 4
 }
@@ -68,37 +67,51 @@ fi
 cd emacs
 
 git_tag=""
-
-
+head=""
+debug=""
+from_branch=""
 # Parse Args
 while [[ $# -gt 0 ]]; do
 
     case $1 in
         head|HEAD )             # last commit (rev)
-            build_emacs_git_head
-            break
+            head="yes"
             ;;
 
         -t|--tag )              # latest tag (i.e, release)
             git_tag="$git_tag $2"
             shift
-            build_emacs_from_tag $git_tag
             break
             ;;
 
-
         -d )
             export CFLAGS='-g -O0'
-            build_emacs_git_head
+            debug="yes"
+            ;;
+
+        -b )
+            from_branch="yes"
             ;;
 
         *)
-            echo "Unknown Argument!!"
+            echo "\"$1\"nknown Argument!!"
             exit 4
             ;;
     esac
     shift
-
 done
+
+if [ x$head ="xyes" ]; then
+    build_from_git_head
+
+elif [[ ! -z $git_tag ]]; then
+    build_emacs_git_tag
+
+elif [[ -z $from_branch ]]; then
+    echo "Not implemented yet"
+    # build_emacs_git_branch
+else
+    echo "Nothing to do..??"
+fi
 
 # buildemacs ends here
