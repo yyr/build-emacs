@@ -51,26 +51,35 @@ function build_emacs_git_head()
     rev=$(git rev-parse --short HEAD)
     INSTALL_DIR=$HOME/local/emacs-$rev
     build_emacs
+}
 
+function git_change_to_tag()
+{
+    git fetch origin --tags
+    tag=$1
+    if [[ "x$tag" == "xlatest" || "$git_tag" == "" ]]; then
+        tag=$(git describe --abbrev=0 --tags)
+        git checkout $tag
+
+    elif [[ ! -z $git_tag ]]; then
+        git checkout $tag
+        if [ ! $? == 0  ]; then
+            echo "There is no tag called \"$tag\""
+            exit
+        fi
+    fi
+    return
 }
 
 function build_emacs_git_tag()
 {
-    if [ $git_tag == "" || $git_tag == "latest" ]; then
-        latest_tag=$(git describe --abbrev=0 --tags)
-        git checkout $latest_tag
-        # since we are checking out to a release(possibly), better clean the repo.
-        git clean -xdf
+    git_change_to_tag $git_tag
+    INSTALL_DIR=$HOME/local/$tag
+    echo "Building from tag: $tag"
+    sleep 1
 
-        INSTALL_DIR=$HOME/local/$latest_tag
-        build_emacs
+    git clean -xdf     # since we are checking out to a release(possibly),
+                       # better to clean the repo.
 
-    elif [[ ! -z $git_tag ]]; then
-
-        git checkout $git_tag
-        git clean -xdf
-
-        INSTALL_DIR=$HOME/local/$latest_tag
-        build_emacs
-    fi
+    build_emacs
 }

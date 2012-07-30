@@ -86,9 +86,8 @@ while [[ $# -gt 0 ]]; do
             ;;
 
         -t|--tag )              # latest tag (i.e, release)
-            git_tag="$git_tag $2"
+            git_tag="$2"
             shift
-            break
             ;;
 
         -d )
