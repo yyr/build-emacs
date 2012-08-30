@@ -6,13 +6,17 @@ different commands.
 : sudo apt-get build-essentials
 : sudo apt-get build-dep emacs23
 
-*** Build
+*** usage
 - Get this repo
 - here is few ways to install Emacs.
 : ./build-emacs head            # to install from head
 : ./build-emacs -t latest       # build latest stable release
 : ./build-emacs -t some_tag     # for eg some_tag may be emacs-24.1
 : ./build-emacs -b some_branch  # build from some_branch (local or with remote tracking)
+
+- run git commands in the repo directory
+: ./build-emacs -g git some command
+~git some command~ will be run the repo directory.
 
 For all the options, run
 : ./build-emacs --help

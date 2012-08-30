@@ -43,6 +43,9 @@ USAGE:
       -d
          Enable debug flags for the build.
 
+      -g git command
+         run git commands on the repository.
+
 
  Argument:
       head
@@ -70,6 +73,7 @@ git_tag=""
 head=""
 debug=""
 from_branch=""
+git_cmd=""
 
 # Parse Args
 while [[ $# -gt 0 ]]; do
@@ -99,6 +103,11 @@ while [[ $# -gt 0 ]]; do
             from_branch="yes"
             ;;
 
+        -g )
+            shift
+            git_cmd="$@"
+            break
+            ;;
         *)
             echo "\"$1\" is Unknown Option/Argument!!"
             usage
@@ -119,6 +128,8 @@ elif [[ ! -z $git_tag ]]; then
 
 elif [[ "x$head" == "xyes" ]]; then
     build_emacs_git_head
+elif [[ ! -z $git_cmd ]]; then
+    eval $git_cmd
 else
     echo "Nothing to do.. :(, did you forget to give arguments?"
     usage
