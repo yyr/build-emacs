@@ -1,6 +1,8 @@
 #!/bin/bash
 # -*- mode: sh; -*-
 
+# doc: start emacs under gdb
+
 EMACS=`which emacs`
 cd `dirname $BASH_SOURCE`/emacs/src
-exec -a debug-emacs xterm -e gdb $EMACS --eval-command=run
+exec -a debug-emacs gnome-terminal --title="gdb emacs" --execute gdb $EMACS --eval-command=run
