@@ -1,0 +1,6 @@
+#!/bin/bash
+# -*- mode: sh; -*-
+
+EMACS=`which emacs`
+cd `dirname $BASH_SOURCE`/emacs/src
+exec -a debug-emacs xterm -e gdb $EMACS --eval-command=run
