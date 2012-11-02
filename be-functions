@@ -58,6 +58,7 @@ function git_clean()
 function build_emacs_git_branch()
 {
     git_change_branch $1
+    git pull origin $1
     git_clean
     set_install_dir
     build_emacs
