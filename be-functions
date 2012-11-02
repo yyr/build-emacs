@@ -39,7 +39,21 @@ function build_emacs()
 
 function git_change_branch()
 {
-    echo pass
+    echo "Checking out $1"
+    git checkout $1
+}
+
+function git_clean()
+{
+    echo "Running git clean"
+    git clean -df &> /dev/null
+}
+
+function build_emacs_git_branch()
+{
+    git_change_branch $1
+    git_clean
+    build_emacs
 }
 
 function build_emacs_git_head()
@@ -76,10 +90,6 @@ function build_emacs_git_tag()
     git_change_to_tag $git_tag
     INSTALL_DIR=$HOME/local/$tag
     echo "Building from tag: $tag"
-    sleep 1
-
-    git clean -xdf     # since we are checking out to a release(possibly),
-                       # better to clean the repo.
-
+    git_clean
     build_emacs
 }

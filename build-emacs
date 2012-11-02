@@ -100,7 +100,8 @@ while [[ $# -gt 0 ]]; do
             ;;
 
         -b )
-            from_branch="yes"
+            from_branch="$2"
+            shift
             ;;
 
         -g )
@@ -120,8 +121,7 @@ done
 
 # go for build.
 if [[ ! -z $from_branch ]]; then
-    echo "Build from git branch is implemented yet."
-    # build_emacs_git_branch
+    build_emacs_git_branch $from_branch
 
 elif [[ ! -z $git_tag ]]; then
     build_emacs_git_tag
