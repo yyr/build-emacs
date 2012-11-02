@@ -53,6 +53,7 @@ function build_emacs_git_branch()
 {
     git_change_branch $1
     git_clean
+    INSTALL_DIR=$HOME/local/emacs-$rev
     build_emacs
 }
 
