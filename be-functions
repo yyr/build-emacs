@@ -37,6 +37,12 @@ function build_emacs()
     fi
 }
 
+function set_install_dir()
+{
+    rev=$(git rev-parse --short HEAD)
+    export INSTALL_DIR=$HOME/local/emacs-$rev
+}
+
 function git_change_branch()
 {
     echo "Checking out $1"
@@ -53,7 +59,7 @@ function build_emacs_git_branch()
 {
     git_change_branch $1
     git_clean
-    INSTALL_DIR=$HOME/local/emacs-$rev
+    set_install_dir
     build_emacs
 }
 
@@ -62,9 +68,7 @@ function build_emacs_git_head()
     # change to master, pull for updates and call build.
     git checkout master
     git pull origin master
-
-    rev=$(git rev-parse --short HEAD)
-    INSTALL_DIR=$HOME/local/emacs-$rev
+    set_install_dir
     build_emacs
 }
 
