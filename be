@@ -19,6 +19,8 @@ fi
 # get from envronment or set it to empty.
 BE_REMOTE=${BE_REMOTE:-"git://repo.or.cz/emacs.git"}
 BE_CONF_FLAGS=${BE_CONF_FLAGS:-""}
+MAKE=${MAKE:-"make"}
+
 
 . ./be-functions
 
