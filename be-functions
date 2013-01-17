@@ -23,8 +23,8 @@ function run_make()
     if [ ! -f Makefile ]; then
         run_configure
     fi
-    make | tee log.make
-    make GZIP_PROG="" install | tee log.install
+    ${MAKE} | tee log.make
+    ${MAKE} GZIP_PROG="" install | tee log.install
 }
 
 function build_emacs()
@@ -52,7 +52,7 @@ function git_change_branch()
 function git_clean()
 {
     echo "Running git clean"
-    git clean -df &> /dev/null
+    git clean -xdf &> /dev/null
 }
 
 function build_emacs_git_branch()

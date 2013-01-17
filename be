@@ -47,7 +47,8 @@ USAGE:
 
       -g git command
          run git commands on the repository.
-
+         For eg: to run "git pull" in emacs repo
+            ./be -g pull
 
  Argument:
       head
@@ -131,7 +132,7 @@ elif [[ ! -z $git_tag ]]; then
 elif [[ "x$head" == "xyes" ]]; then
     build_emacs_git_head
 elif [[ ! -z $git_cmd ]]; then
-    eval $git_cmd
+    eval "git $git_cmd"
 else
     echo "Nothing to do.. :(, did you forget to give arguments?"
     usage
