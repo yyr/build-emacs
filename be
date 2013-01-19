@@ -7,6 +7,7 @@
 #
 
 # Instead of changing variable in here create be.conf file
+t="$(date +%s)"
 
 SCRIPT_DIR=$(cd `dirname $BASH_SOURCE`; pwd)
 cd $SCRIPT_DIR
@@ -137,5 +138,8 @@ else
     echo "Nothing to do.. :(, did you forget to give arguments?"
     usage
 fi
+
+t="$(($(date +%s)-t))"
+printf "\n-----\nBuilding took: %02d:%02d\n" "$((t/60%60))" "$((t%60))"
 
 # buildemacs ends here
