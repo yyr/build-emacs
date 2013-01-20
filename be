@@ -9,7 +9,11 @@
 # Instead of changing variable in here create be.conf file
 t="$(date +%s)"
 
-SCRIPT_DIR=$(cd `dirname $BASH_SOURCE`; pwd)
+test -x /usr/bin/readlink || readlink () {
+        echo $(/bin/ls -l $1 | /bin/cut -d'>' -f 2)
+    }
+
+SCRIPT_DIR=`cd $(dirname $(readlink $BASH_SOURCE)) && pwd`
 cd $SCRIPT_DIR
 
 if [ -f be.conf ]; then
