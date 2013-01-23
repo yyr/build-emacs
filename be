@@ -9,15 +9,19 @@
 # Instead of changing variable in here create be.conf file
 t="$(date +%s)"
 
-# go to source directory
-# catch this script if called from a link
-test -x /usr/bin/readlink || readlink () {
-        echo $(/bin/ls -l $1 | /bin/cut -d'>' -f 2)
-    }
+cd $(dirname "$BASH_SOURCE")
+# Go to source directory
+# catch links.
+linkpath () {
+    echo $(ls -l $1 | cut -d'>' -f 2)
+}
+if [ -L "$0" ]; then
+    link_path=$(linkpath $0)
+    cd $(dirname $link_path)
+fi
 
-SCRIPT_DIR=`cd $(dirname $BASH_SOURCE) && \
-cd $(dirname $(readlink $BASH_SOURCE)) && pwd`
-cd $SCRIPT_DIR                  # this should be real path of the this package
+SCRIPT_DIR=$(pwd)
+cd $SCRIPT_DIR                # this should be real path of the this package
 
 if [ -f be.conf ]; then
     . be.conf
@@ -30,7 +34,7 @@ BE_CONF_FLAGS=${BE_CONF_FLAGS:-""}
 MAKE=${MAKE:-"make"}
 
 
-. ./be-functions
+. be-functions
 
 function usage()
 {
