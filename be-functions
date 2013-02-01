@@ -15,6 +15,7 @@ function run_configure()
         run_autogen
     fi
 
+    echo "Running configure:\n" ./configure --prefix=$PREFIX $BE_CONF_FLAGS --without-compress-info
     ./configure --prefix=$PREFIX $BE_CONF_FLAGS --without-compress-info | tee log.config
 }
 
@@ -41,8 +42,6 @@ function set_prefix()
 {
     rev=$(git rev-parse --short HEAD)
     export PREFIX=${PREFIX:-$HOME/local}/emacs-$rev
-    echo PREFIX=$PREFIX
-    exit
 }
 
 function git_change_branch()
