@@ -15,7 +15,7 @@ function run_configure()
         run_autogen
     fi
 
-    ./configure --prefix=$INSTALL_DIR $BE_CONF_FLAGS --without-compress-info | tee log.config
+    ./configure --prefix=$PREFIX $BE_CONF_FLAGS --without-compress-info | tee log.config
 }
 
 function run_make()
@@ -37,10 +37,12 @@ function build_emacs()
     fi
 }
 
-function set_install_dir()
+function set_prefix()
 {
     rev=$(git rev-parse --short HEAD)
-    export INSTALL_DIR=$HOME/local/emacs-$rev
+    export PREFIX=${PREFIX:-$HOME/local}/emacs-$rev
+    echo PREFIX=$PREFIX
+    exit
 }
 
 function git_change_branch()
@@ -60,7 +62,7 @@ function build_emacs_git_branch()
     git_change_branch $1
     git pull origin $1
     git_clean
-    set_install_dir
+    set_prefix
     build_emacs
 }
 
@@ -69,7 +71,7 @@ function build_emacs_git_head()
     # change to master, pull for updates and call build.
     git checkout master
     git pull origin master
-    set_install_dir
+    set_prefix
     build_emacs
 }
 
@@ -94,7 +96,7 @@ function git_change_to_tag()
 function build_emacs_git_tag()
 {
     git_change_to_tag $git_tag
-    INSTALL_DIR=$HOME/local/$tag
+    PREFIX=$HOME/local/$tag
     echo "Building from tag: $tag"
     git_clean
     build_emacs
