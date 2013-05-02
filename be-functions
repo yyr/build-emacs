@@ -33,9 +33,7 @@ function build_emacs()
     run_configure
     run_make
 
-    if [ -f $SCRIPT_DIR/post-build-hook ]; then
-        . $SCRIPT_DIR/post-build-hook
-    fi
+    . $SCRIPT_DIR/post-build-hook
 }
 
 function set_prefix()
