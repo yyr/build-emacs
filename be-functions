@@ -2,11 +2,6 @@
 
 function run_autogen() {        # run autogen.sh
     ./autogen.sh &> autogen.log
-
-    # if autogen fails fallback method
-    if [ $? -ne 0 ]; then
-        ./autogen/copy_autogen
-    fi
 }
 
 function run_configure()
