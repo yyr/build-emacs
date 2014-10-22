@@ -33,8 +33,8 @@ function build_emacs()
 
 function set_prefix()
 {
-    rev=$(git rev-parse --short HEAD)
-    export PREFIX=${PREFIX:-$HOME/local}/emacs-$rev
+#    rev=$(git rev-parse --short HEAD)
+    export PREFIX=${PREFIX:-$HOME/local}/emacs
 }
 
 function git_change_branch()
