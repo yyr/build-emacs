@@ -10,8 +10,8 @@ function run_configure()
         run_autogen
     fi
 
-    echo "Running configure:\n" ./configure --prefix=$PREFIX $BE_CONF_FLAGS --without-compress-info
-    ./configure --prefix=$PREFIX $BE_CONF_FLAGS --without-compress-info | tee log.config
+    echo "Running configure:\n" ./configure --prefix=$PREFIX $BE_CONF_FLAGS --without-compress-install
+    ./configure --prefix=$PREFIX $BE_CONF_FLAGS --without-compress-install | tee log.config
 }
 
 function run_make()
