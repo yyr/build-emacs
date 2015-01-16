@@ -151,6 +151,6 @@ else
 fi
 
 t="$(($(date +%s)-t))"
-printf "\n-----\nBuilding took: %02d:%02d\n" "$((t/60%60))" "$((t%60))"
+printf "\n-----\nBuilding took: %02d:%02d\n" "$((t%3600/60))" "$((t%60))"
 
 # buildemacs ends here
