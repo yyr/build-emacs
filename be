@@ -110,7 +110,8 @@ while [[ $# -gt 0 ]]; do
             ;;
 
         -d )
-            export CFLAGS='-g -O0'
+            # export CFLAGS='-g -O0'
+            export CFLAGS='-O3'
             debug="yes"
             ;;
 
