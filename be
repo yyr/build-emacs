@@ -101,6 +101,7 @@ while [[ $# -gt 0 ]]; do
             ;;
 
         head|HEAD )             # last commit (rev)
+            export CFLAGS='-O3'
             head="yes"
             ;;
 
@@ -110,8 +111,8 @@ while [[ $# -gt 0 ]]; do
             ;;
 
         -d )
-            # export CFLAGS='-g -O0'
-            export CFLAGS='-O3'
+            export CFLAGS='-g -O0'
+            BE_CONF_FLAGS='--enable-checking'
             debug="yes"
             ;;
 
