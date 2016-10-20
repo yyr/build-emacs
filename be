@@ -62,6 +62,9 @@ USAGE:
          For eg: to run "git pull" in emacs repo
             ./be -g pull
 
+      -sn, --skip-network
+         Switch to turn off network fetch before building
+
  Argument:
       head
            Install from the head.
@@ -126,6 +129,11 @@ while [[ $# -gt 0 ]]; do
             git_cmd="$@"
             break
             ;;
+
+        -sn|--skip-network )
+            SN="yes"
+            ;;
+
         *)
             echo "\"$1\" is Unknown Option/Argument!!"
             usage
@@ -145,7 +153,7 @@ elif [[ ! -z $git_tag ]]; then
 
 elif [[ "x$head" == "xyes" ]]; then
     build_emacs_git_head
-elif [[ ! -z $git_cmd ]]; then
+elif [[ ! -z ${git_cmd} ]]; then
     eval "git $git_cmd"
 else
     echo "Nothing to do.. :(, did you forget to give arguments?"

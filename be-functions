@@ -52,7 +52,11 @@ function git_clean()
 function build_emacs_git_branch()
 {
     git_change_branch $1
-    git pull origin $1
+    if [[ "$SN" == "yes"  ]]; then
+        echo "INFO: Skipping git pull as requested."
+    else
+        git pull origin master
+    fi
     git_clean
     set_prefix
     build_emacs
@@ -62,7 +66,11 @@ function build_emacs_git_head()
 {
     # change to master, pull for updates and call build.
     git checkout master
-    git pull origin master
+    if [[ "$SN" == "yes"  ]]; then
+        echo "INFO: Skipping git pull as requested."
+    else
+        git pull origin master
+    fi
     set_prefix
     build_emacs
 }
